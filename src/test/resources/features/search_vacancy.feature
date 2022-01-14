@@ -1,7 +1,14 @@
 @search
 Feature: Search Hotel Scenarios
 
-    Scenario: search fails due to entered past check-in date
+  @happyPath
+  Scenario: Shows available hotels after reservation search is successful
+    Given I want to make a reservation
+    When I fill the form with the info matching a hotel
+    And I submit form
+    Then I should be shown available hotels as a list in a new page
+
+  Scenario: search fails due to entered past check-in date
     Given I am on Main page
     When I fill in city text field with Istanbul
     And I fill in check in date text field with 14/02/2010
@@ -73,13 +80,13 @@ Feature: Search Hotel Scenarios
     | istanbul | 14/05/2022  | 15/05/2022   | 2              | 2             |
 
 
-  Scenario Outline: It searches with all fields filled but cannot find any hotel matching criteria
-    Given I want to make a reservation
-    When I fill in form with valid info
-    But I leave <field> blank
-    And I submit form
-    Then I should be shown <warning> field warning
-    And I should be shown reservation form page
-    Examples:
-      | field     | warning |
-      | istanbul | 14/05/2022  |
+  #Scenario Outline: It searches with all fields filled but cannot find any hotel matching criteria
+   # Given I want to make a reservation
+    #When I fill in form with valid info
+    #But I leave <field> blank
+    #And I submit form
+    #Then I should be shown <warning> field warning
+    #And I should be shown reservation form page
+    #Examples:
+    #  | field     | warning |
+    #  | istanbul | 14/05/2022  |

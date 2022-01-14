@@ -2,6 +2,7 @@ package app.tests;
 
 import app.driver.DriverWrapper;
 import app.exceptions.InvalidCheckInDateException;
+import app.pageobjects.HotelList;
 import app.pageobjects.MainPageObject;
 import app.utils.TestHelper;
 import io.appium.java_client.MobileBy;
@@ -24,6 +25,7 @@ import java.util.Calendar;
 public class MainPageTest {
     //public AndroidDriver<MobileElement> driver;
     public MainPageObject page;
+    public HotelList hotelListPage;
 
     @Before()
     public void setUp() throws Exception {
@@ -114,9 +116,23 @@ public class MainPageTest {
         
     }
 
-    @When("I fill in form with valid info")
-    public void iFillInFormWithValidInfo() {
+
+    @When("^I fill the form with the info matching a hotel$")
+    public void iFillTheFormWithTheInfoMatchingAHotel() {
+        page.loadFormData();
     }
+
+    @And("^I submit form$")
+    public void iSubmitForm() {
+        hotelListPage = page.search();
+    }
+
+    @Then("^I should be shown available hotels as a list in a new page$")
+    public void iShouldBeShownAvailableHotelsAsAListInANewPage() {
+        Assert.assertTrue(hotelListPage.hasAnyMatchingHotel());
+    }
+
+
 
     /*
     @When("I fill city text field with {string}")

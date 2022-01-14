@@ -43,6 +43,11 @@ public class MainPageObject {
         return new HotelList(driver);
     }
 
+    public HotelList navigatesToAvailableHotels() {
+        loadFormData();
+        return search();
+    }
+
     public MainPageObject searchAsExpectingError() {
         var search = new WebDriverWait(driver, 2)
                 .until(ExpectedConditions.visibilityOfElementLocated(searchButton));
@@ -54,6 +59,14 @@ public class MainPageObject {
         var titleElement = (MobileElement) new WebDriverWait(driver, 5)
                 .until(ExpectedConditions.visibilityOfElementLocated(title));
         return titleElement;
+    }
+
+    public void loadFormData() {
+        fillCity("Duzce");
+        fillCheckIn("14/02/2022");
+        fillCheckOut("16/02/2022");
+        fillNumberOfPerson("2");
+        fillNumberOfChild("1");
     }
 
     public void fillCity(String text) {

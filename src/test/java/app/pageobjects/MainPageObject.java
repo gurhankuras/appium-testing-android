@@ -34,6 +34,11 @@ public class MainPageObject {
         this.driver = driver;
     }
 
+    public boolean isTitleShown() {
+        var titleElement = new WebDriverWait(driver, 5)
+                .until(ExpectedConditions.visibilityOfElementLocated(title));
+        return titleElement.getAttribute("text").equals(MainPageObject.titleText);
+    }
 
     // Functions
     public HotelList search() {

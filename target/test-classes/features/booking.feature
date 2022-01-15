@@ -7,6 +7,7 @@ Feature: Reservation
     And I submit form f
     Then I am shown home page
 
+    @happyPath
     Scenario: Should see text field when i want to make a request
       Given I want to book
       And I am shown reservation form

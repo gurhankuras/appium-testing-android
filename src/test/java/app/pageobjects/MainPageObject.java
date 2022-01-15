@@ -49,7 +49,7 @@ public class MainPageObject {
     }
 
     public HotelList navigatesToAvailableHotels() {
-        loadFormData();
+        loadFormDataWithExisting();
         return search();
     }
 
@@ -66,8 +66,16 @@ public class MainPageObject {
         return titleElement;
     }
 
-    public void loadFormData() {
+    public void loadFormDataWithExisting() {
         fillCity("Duzce");
+        fillCheckIn("14/02/2022");
+        fillCheckOut("16/02/2022");
+        fillNumberOfPerson("2");
+        fillNumberOfChild("1");
+    }
+
+    public void loadFormDataWithValidData() {
+        fillCity("Istanbul");
         fillCheckIn("14/02/2022");
         fillCheckOut("16/02/2022");
         fillNumberOfPerson("2");

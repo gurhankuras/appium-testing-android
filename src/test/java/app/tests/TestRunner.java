@@ -8,7 +8,8 @@ import org.junit.runner.RunWith;
 @CucumberOptions(
         features = "src/test/resources",
         glue = "app.tests",
-        plugin = {"json:target/cucumber.json"}
+        plugin = {"json:target/cucumber.json"},
+        tags = "@happyPath"
 )
-public class CucumberRunner {
+public class TestRunner {
 }

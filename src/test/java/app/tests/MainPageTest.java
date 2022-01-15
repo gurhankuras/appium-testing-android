@@ -4,16 +4,14 @@ import app.driver.DriverWrapper;
 import app.exceptions.InvalidCheckInDateException;
 import app.pageobjects.HotelList;
 import app.pageobjects.MainPageObject;
+import app.utils.DateService;
 import app.utils.TestHelper;
 import io.appium.java_client.MobileBy;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.android.AndroidDriver;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
-import io.cucumber.java.en.And;
-import io.cucumber.java.en.Given;
-import io.cucumber.java.en.Then;
-import io.cucumber.java.en.When;
+import io.cucumber.java.en.*;
 import org.junit.Assert;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
@@ -21,6 +19,7 @@ import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 public class MainPageTest {
     //public AndroidDriver<MobileElement> driver;
@@ -119,7 +118,7 @@ public class MainPageTest {
 
     @When("^I fill the form with the info matching a hotel$")
     public void iFillTheFormWithTheInfoMatchingAHotel() {
-        page.loadFormData();
+        page.loadFormDataWithExisting();
     }
 
     @And("^I submit form$")
@@ -130,6 +129,28 @@ public class MainPageTest {
     @Then("^I should be shown available hotels as a list in a new page$")
     public void iShouldBeShownAvailableHotelsAsAListInANewPage() {
         Assert.assertTrue(hotelListPage.hasAnyMatchingHotel());
+    }
+
+    @When("I fill in the search form with valid data")
+    public void iFillInTheSearchFormWithValidData() {
+        page.loadFormDataWithValidData();
+    }
+
+    @But("It cannot find any hotels that matches criterion")
+    public void itCannotFindAnyHotelsThatMatchesCriterion() {
+        page.searchAsExpectingError();
+    }
+
+    @But("I fill in checkin date with {int} days from today")
+    public void iFillInCheckinDateWithDaysFromToday(int days) throws ParseException {
+        var format = new SimpleDateFormat("dd/MM/yyyy");
+        var dateService = new DateService(format);
+
+        var checkInDate = dateService.afterNDaysFromToday(days);
+        var twoDaysFromCheckIn = dateService.afterNDays(checkInDate, 2);
+
+        page.fillCheckIn(checkInDate);
+        page.fillCheckOut(twoDaysFromCheckIn);
     }
 
 

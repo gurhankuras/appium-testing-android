@@ -4,9 +4,11 @@ import io.appium.java_client.MobileBy;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.By;
+import org.openqa.selenium.InvalidArgumentException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
 
 public class ReservationFormPageObject {
     AndroidDriver<MobileElement> driver;
@@ -52,9 +54,23 @@ public class ReservationFormPageObject {
     public ReservationFormPageObject fillResidentSection() {
         this.fill(personNameTextFieldLocator, "Hayri")
                 .fill(personLastNameTextFieldLocator, "Ali")
-                .fill(personTCTextFieldLocator, "12345678912")
-                .fill(personPhoneTextFieldLocator, "05454545555");
+                .fill(personTCTextFieldLocator, "21484486694")
+                .fill(personPhoneTextFieldLocator, "05455545454");
         return this;
+    }
+    private By getLocatorByFieldName(String fieldName) {
+        return switch (fieldName) {
+            case "name" -> personNameTextFieldLocator;
+            case "email" -> contactEmailTextFieldLocator;
+            case "phone" -> contactPhoneTextFieldLocator;
+            case "TC" -> personTCTextFieldLocator;
+            case "lastname" -> personLastNameTextFieldLocator;
+            default -> throw new InvalidArgumentException(String.format("Invalid fieldName: %s", fieldName));
+        };
+    }
+
+    public void fillByFieldName(String fieldName, String value) {
+        fill(getLocatorByFieldName(fieldName), value);
     }
 
     public ReservationFormPageObject makeRequest() {

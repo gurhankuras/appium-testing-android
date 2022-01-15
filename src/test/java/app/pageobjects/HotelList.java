@@ -44,6 +44,10 @@ public class HotelList {
         return isNotBlank(name) && isNotBlank(price) && isNotBlank(location);
     }
 
+    private boolean isNotBlank(WebElement textElement) {
+        return !textElement.getAttribute("text").isBlank();
+    }
+
     public HotelDetailsPageObject showHotelDetails() {
         var showHotelButton = new WebDriverWait(driver, 2)
                 .until(ExpectedConditions.visibilityOfElementLocated(showHotelDetailsButtonLocator));
@@ -51,8 +55,6 @@ public class HotelList {
         return new HotelDetailsPageObject(driver);
     }
 
-    private boolean isNotBlank(WebElement textElement) {
-        return !textElement.getAttribute("text").isBlank();
-    }
+
 
 }

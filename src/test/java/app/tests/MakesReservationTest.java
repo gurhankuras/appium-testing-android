@@ -3,10 +3,7 @@ package app.tests;
 import app.driver.DriverWrapper;
 import app.pageobjects.MainPageObject;
 import app.pageobjects.ReservationFormPageObject;
-import io.cucumber.java.en.And;
-import io.cucumber.java.en.Given;
-import io.cucumber.java.en.Then;
-import io.cucumber.java.en.When;
+import io.cucumber.java.en.*;
 import org.junit.Assert;
 
 import java.net.MalformedURLException;
@@ -27,13 +24,13 @@ public class MakesReservationTest {
         Assert.assertTrue(page.isTitleShown());
     }
 
-    @When("I filled the form with correct info")
+    @When("I fill in the form with valid data")
     public void iFilledTheFormWithCorrectInfo() {
         page.fillContactSection()
                 .fillResidentSection();
     }
 
-    @And("^I submit form f$")
+    @And("^I submit reservation form$")
     public void iSubmitFormF() {
         mainPageObject = page.submitForm();
     }
@@ -51,5 +48,14 @@ public class MakesReservationTest {
     @Then("I should see request text field")
     public void iShouldSeeRequestTextField() {
         Assert.assertTrue(page.isMakeRequestTextFieldVisible());
+    }
+
+    @But("^I fill in (\\w*) with (.*)$")
+    public void iFillInFieldWithValue(String fieldName, String value) {
+        page.fillByFieldName(fieldName, value);
+    }
+
+    @Then("I should be shown error")
+    public void iShouldBeShownError() {
     }
 }
